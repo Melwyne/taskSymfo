@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang=fr>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <section>
+            <form action="{{ path('searchTask') }}" method="get">
+                <input type="search" placeholder="search" name="title">
+                <div>
+                    <input type="checkbox" id="taskActive" name="taskActive">
+                    <label for="taskActive">Tâche en cours</label>
+                </div>
+
+                <label>Choose a type by name :</label>
+                <select name="typeName">
+                    <option value="">Please choose</option>
+                    {% for type in types %}
+                        <option value="{{ type.id }}">{{ type.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label>Start date:</label>
+                <input type="date" name="dateStart" value="">
+
+                <label>End date:</label>
+                <input type="date" name="dateEnd" value="">
+
+                <input type="submit">
+            </form>
+        </section>
+        <h1>Tâches en cours</h1>
+        {% for task in tasks %}
+            <h2>{{ task.title }}</h2>
+            <p>{{ task.description }}</p>
+            <span>{{ task.adress }}</span>
+            <span>{{ task.dateheure|date('d/m/Y') }}</span>
+            <span>{{ task.user }}</span>
+            <img src="{{ asset('uploadDirectory/' ~ task.media) }}" alt="">
+            <span>{{ task.active }}</span>
+            <span>{{ task.type.name }}</span>
+            <a href="{{ path ('updateTask', {'id':task.id}) }}">Modifier</a>
+        {% endfor %}
+
+    </main>
+</body>
+</html>
